@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Tracker</title>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Job Application Tracker</h1>
+  </header>
+
+  <main>
+    <section aria-label="Application dashboard">
+      <div>
+        <p>Total</p>
+        <p id="total-count">8</p>
+      </div>
+      <div>
+        <p>Interview</p>
+        <p id="interview-count">0</p>
+      </div>
+      <div>
+        <p>Rejected</p>
+        <p id="rejected-count">0</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="available-jobs-heading">
+      <div>
+        <h2 id="available-jobs-heading">Available Jobs</h2>
+        <p id="jobs-count">8 jobs</p>
+      </div>
+
+      <div>
+        <button id="all-tab" type="button">All</button>
+        <button id="interview-tab" type="button">Interview</button>
+        <button id="rejected-tab" type="button">Rejected</button>
+      </div>
+
+      <div id="jobs-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Crafted by Arif Sadik</p>
+  </footer>
+</body>
+</html>
