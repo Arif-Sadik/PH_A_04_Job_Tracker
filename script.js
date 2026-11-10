@@ -81,11 +81,31 @@ const jobs = [
   }
 ];
 
+let activeTab = "All";
+
 function displayJobs() {
   const jobsContainer = document.getElementById("jobs-container");
   jobsContainer.innerHTML = "";
+  let filteredJobs = jobs;
 
-  jobs.forEach((job) => {
+  if (activeTab === "Interview") {
+    filteredJobs = jobs.filter((job) => job.status === "Interview");
+  } else if (activeTab === "Rejected") {
+    filteredJobs = jobs.filter((job) => job.status === "Rejected");
+  }
+
+  if (filteredJobs.length === 0) {
+    jobsContainer.innerHTML = `
+      <div class="rounded-xl border border-slate-200 bg-white px-6 py-12 text-center">
+        <p class="text-lg font-semibold text-slate-700">No jobs available</p>
+        <p class="mt-2 text-sm text-slate-500">Check back soon for new job opportunities</p>
+      </div>
+    `;
+    updateJobsCount(0);
+    return;
+  }
+
+  filteredJobs.forEach((job) => {
     const statusClasses = job.status === "Interview"
       ? "bg-emerald-100 text-emerald-700"
       : job.status === "Rejected"
@@ -130,6 +150,7 @@ function displayJobs() {
     `;
     jobsContainer.appendChild(jobCard);
   });
+  updateJobsCount(filteredJobs.length);
 }
 
 function updateJobStatus(jobId, newStatus) {
@@ -146,6 +167,23 @@ function updateJobStatus(jobId, newStatus) {
   job.status = newStatus;
   displayJobs();
   updateDashboard();
+}
+
+function updateJobsCount(count) {
+  const jobsCount = document.getElementById("jobs-count");
+  jobsCount.textContent = count === 1 ? "1 job" : `${count} jobs`;
+}
+
+function updateTabStyles() {
+  const activeClasses = "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700";
+  const inactiveClasses = "rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600";
+  const allTab = document.getElementById("all-tab");
+  const interviewTab = document.getElementById("interview-tab");
+  const rejectedTab = document.getElementById("rejected-tab");
+
+  allTab.className = activeTab === "All" ? activeClasses : inactiveClasses;
+  interviewTab.className = activeTab === "Interview" ? activeClasses : inactiveClasses;
+  rejectedTab.className = activeTab === "Rejected" ? activeClasses : inactiveClasses;
 }
 
 function updateDashboard() {
@@ -173,5 +211,24 @@ jobsContainer.addEventListener("click", (event) => {
   updateJobStatus(jobId, button.dataset.action);
 });
 
+document.getElementById("all-tab").addEventListener("click", () => {
+  activeTab = "All";
+  displayJobs();
+  updateTabStyles();
+});
+
+document.getElementById("interview-tab").addEventListener("click", () => {
+  activeTab = "Interview";
+  displayJobs();
+  updateTabStyles();
+});
+
+document.getElementById("rejected-tab").addEventListener("click", () => {
+  activeTab = "Rejected";
+  displayJobs();
+  updateTabStyles();
+});
+
 displayJobs();
 updateDashboard();
+updateTabStyles();
