@@ -113,11 +113,11 @@ function displayJobs() {
         ? "bg-red-100 text-red-700"
         : "bg-slate-100 text-slate-600";
     const interviewButtonClasses = job.status === "Interview"
-      ? "bg-emerald-600 text-white hover:bg-emerald-700"
-      : "border border-emerald-200 text-emerald-700 hover:bg-emerald-50";
+      ? "bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500"
+      : "border border-emerald-200 text-emerald-700 hover:bg-emerald-50 focus:ring-emerald-500";
     const rejectedButtonClasses = job.status === "Rejected"
-      ? "bg-red-600 text-white hover:bg-red-700"
-      : "border border-red-200 text-red-600 hover:bg-red-50";
+      ? "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500"
+      : "border border-red-200 text-red-600 hover:bg-red-50 focus:ring-red-500";
     const jobCard = document.createElement("article");
     jobCard.className = "relative rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6";
     jobCard.dataset.jobId = job.id;
@@ -138,11 +138,11 @@ function displayJobs() {
         <div class="mt-5 flex flex-col gap-4 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
           <span data-status="${job.status}" class="w-fit rounded-full px-3 py-1 text-xs font-semibold ${statusClasses}">${job.status}</span>
           <div class="flex flex-wrap gap-2">
-            <button type="button" data-action="Interview" class="min-w-24 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${interviewButtonClasses}">Interview</button>
-            <button type="button" data-action="Rejected" class="min-w-24 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${rejectedButtonClasses}">Rejected</button>
+            <button type="button" data-action="Interview" class="min-w-24 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${interviewButtonClasses}">Interview</button>
+            <button type="button" data-action="Rejected" class="min-w-24 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${rejectedButtonClasses}">Rejected</button>
           </div>
         </div>
-        <button type="button" data-action="Delete" aria-label="Delete job" class="absolute right-5 top-5 rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 sm:right-6 sm:top-6">
+        <button type="button" data-action="Delete" aria-label="Delete job" class="absolute right-5 top-5 rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 sm:right-6 sm:top-6">
           <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12m-9 0V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7m-7 0 .75 12.25A1.5 1.5 0 0 0 10.25 20h3.5a1.5 1.5 0 0 0 1.5-.75L16 7M10 10.5v5m4-5v5" />
           </svg>
@@ -188,8 +188,8 @@ function updateJobsCount(count) {
 }
 
 function updateTabStyles() {
-  const activeClasses = "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700";
-  const inactiveClasses = "rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600";
+  const activeClasses = "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2";
+  const inactiveClasses = "rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2";
   const allTab = document.getElementById("all-tab");
   const interviewTab = document.getElementById("interview-tab");
   const rejectedTab = document.getElementById("rejected-tab");
