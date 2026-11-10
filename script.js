@@ -86,6 +86,17 @@ function displayJobs() {
   jobsContainer.innerHTML = "";
 
   jobs.forEach((job) => {
+    const statusClasses = job.status === "Interview"
+      ? "bg-emerald-100 text-emerald-700"
+      : job.status === "Rejected"
+        ? "bg-red-100 text-red-700"
+        : "bg-slate-100 text-slate-600";
+    const interviewButtonClasses = job.status === "Interview"
+      ? "bg-emerald-600 text-white hover:bg-emerald-700"
+      : "border border-emerald-200 text-emerald-700 hover:bg-emerald-50";
+    const rejectedButtonClasses = job.status === "Rejected"
+      ? "bg-red-600 text-white hover:bg-red-700"
+      : "border border-red-200 text-red-600 hover:bg-red-50";
     const jobCard = document.createElement("article");
     jobCard.className = "relative rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6";
     jobCard.dataset.jobId = job.id;
@@ -104,10 +115,10 @@ function displayJobs() {
         </div>
         <p class="mt-4 text-sm leading-6 text-slate-600">${job.description}</p>
         <div class="mt-5 flex flex-col gap-4 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
-          <span data-status="${job.status}" class="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">${job.status}</span>
+          <span data-status="${job.status}" class="w-fit rounded-full px-3 py-1 text-xs font-semibold ${statusClasses}">${job.status}</span>
           <div class="flex flex-wrap gap-2">
-            <button type="button" class="min-w-24 rounded-lg border border-emerald-200 px-3 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50">Interview</button>
-            <button type="button" class="min-w-24 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50">Rejected</button>
+            <button type="button" data-action="Interview" class="min-w-24 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${interviewButtonClasses}">Interview</button>
+            <button type="button" data-action="Rejected" class="min-w-24 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${rejectedButtonClasses}">Rejected</button>
           </div>
         </div>
         <button type="button" aria-label="Delete job" class="absolute right-5 top-5 rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 sm:right-6 sm:top-6">
@@ -121,4 +132,46 @@ function displayJobs() {
   });
 }
 
+function updateJobStatus(jobId, newStatus) {
+  if (newStatus !== "Interview" && newStatus !== "Rejected") {
+    return;
+  }
+
+  const job = jobs.find((item) => item.id === jobId);
+
+  if (!job) {
+    return;
+  }
+
+  job.status = newStatus;
+  displayJobs();
+  updateDashboard();
+}
+
+function updateDashboard() {
+  const totalCount = document.getElementById("total-count");
+  const interviewCount = document.getElementById("interview-count");
+  const rejectedCount = document.getElementById("rejected-count");
+
+  totalCount.textContent = jobs.length;
+  interviewCount.textContent = jobs.filter((job) => job.status === "Interview").length;
+  rejectedCount.textContent = jobs.filter((job) => job.status === "Rejected").length;
+}
+
+const jobsContainer = document.getElementById("jobs-container");
+
+jobsContainer.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-action]");
+
+  if (!button) {
+    return;
+  }
+
+  const jobCard = button.closest("[data-job-id]");
+  const jobId = Number(jobCard.dataset.jobId);
+
+  updateJobStatus(jobId, button.dataset.action);
+});
+
 displayJobs();
+updateDashboard();
