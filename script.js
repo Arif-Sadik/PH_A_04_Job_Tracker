@@ -97,6 +97,7 @@ function displayJobs() {
   if (filteredJobs.length === 0) {
     jobsContainer.innerHTML = `
       <div class="rounded-xl border border-slate-200 bg-white px-6 py-12 text-center">
+        <img src="assets/jobs.png" alt="No jobs available" class="mx-auto h-24 w-24 object-contain">
         <p class="text-lg font-semibold text-slate-700">No jobs available</p>
         <p class="mt-2 text-sm text-slate-500">Check back soon for new job opportunities</p>
       </div>
@@ -141,7 +142,7 @@ function displayJobs() {
             <button type="button" data-action="Rejected" class="min-w-24 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${rejectedButtonClasses}">Rejected</button>
           </div>
         </div>
-        <button type="button" aria-label="Delete job" class="absolute right-5 top-5 rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 sm:right-6 sm:top-6">
+        <button type="button" data-action="Delete" aria-label="Delete job" class="absolute right-5 top-5 rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 sm:right-6 sm:top-6">
           <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12m-9 0V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7m-7 0 .75 12.25A1.5 1.5 0 0 0 10.25 20h3.5a1.5 1.5 0 0 0 1.5-.75L16 7M10 10.5v5m4-5v5" />
           </svg>
@@ -165,6 +166,18 @@ function updateJobStatus(jobId, newStatus) {
   }
 
   job.status = newStatus;
+  displayJobs();
+  updateDashboard();
+}
+
+function deleteJob(jobId) {
+  const jobIndex = jobs.findIndex((job) => job.id === jobId);
+
+  if (jobIndex === -1) {
+    return;
+  }
+
+  jobs.splice(jobIndex, 1);
   displayJobs();
   updateDashboard();
 }
@@ -207,6 +220,11 @@ jobsContainer.addEventListener("click", (event) => {
 
   const jobCard = button.closest("[data-job-id]");
   const jobId = Number(jobCard.dataset.jobId);
+
+  if (button.dataset.action === "Delete") {
+    deleteJob(jobId);
+    return;
+  }
 
   updateJobStatus(jobId, button.dataset.action);
 });
