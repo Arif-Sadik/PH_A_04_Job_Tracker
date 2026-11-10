@@ -4,46 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Job Application Tracker</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="script.js" defer></script>
 </head>
-<body>
-  <header>
-    <h1>Job Application Tracker</h1>
+<body class="min-h-screen bg-slate-100 font-sans text-slate-900">
+  <header class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">Job Application Tracker</h1>
   </header>
 
-  <main>
-    <section aria-label="Application dashboard">
-      <div>
-        <p>Total</p>
-        <p id="total-count">8</p>
+  <main class="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 lg:px-8">
+    <section aria-label="Application dashboard" class="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+      <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <p class="text-sm font-medium text-slate-500">Total</p>
+        <p id="total-count" class="mt-2 text-3xl font-bold text-slate-800">8</p>
       </div>
-      <div>
-        <p>Interview</p>
-        <p id="interview-count">0</p>
+      <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <p class="text-sm font-medium text-slate-500">Interview</p>
+        <p id="interview-count" class="mt-2 text-3xl font-bold text-blue-600">0</p>
       </div>
-      <div>
-        <p>Rejected</p>
-        <p id="rejected-count">0</p>
+      <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <p class="text-sm font-medium text-slate-500">Rejected</p>
+        <p id="rejected-count" class="mt-2 text-3xl font-bold text-slate-800">0</p>
       </div>
     </section>
 
-    <section aria-labelledby="available-jobs-heading">
-      <div>
-        <h2 id="available-jobs-heading">Available Jobs</h2>
-        <p id="jobs-count">8 jobs</p>
+    <section aria-labelledby="available-jobs-heading" class="mt-10 sm:mt-12">
+      <div class="flex items-center justify-between gap-4">
+        <h2 id="available-jobs-heading" class="text-2xl font-bold text-slate-800 sm:text-3xl">Available Jobs</h2>
+        <p id="jobs-count" class="shrink-0 text-sm font-medium text-slate-500 sm:text-base">8 jobs</p>
       </div>
 
-      <div>
-        <button id="all-tab" type="button">All</button>
-        <button id="interview-tab" type="button">Interview</button>
-        <button id="rejected-tab" type="button">Rejected</button>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button id="all-tab" type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">All</button>
+        <button id="interview-tab" type="button" class="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600">Interview</button>
+        <button id="rejected-tab" type="button" class="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600">Rejected</button>
       </div>
 
-      <div id="jobs-container"></div>
+      <div id="jobs-container" class="mt-6 space-y-4"></div>
     </section>
   </main>
 
-  <footer>
+  <footer class="border-t border-slate-200 py-6 text-center text-sm text-slate-500">
     <p>Crafted by Arif Sadik</p>
   </footer>
 </body>
